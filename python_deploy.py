@@ -3818,6 +3818,8 @@ def run_bike_bus_bike_google_server():
         print("Features: Google Maps Bike Routing + Google Maps + Real-time GTFS")
         print("No ArcGIS Required!")
         print("=" * 70)
+        print(f"Starting server on port {DEFAULT_PORT}...")
+        print(f"Environment: PORT={os.environ.get('PORT', 'not set')}")
         
         if not initialize_server_components():
             print("Failed to initialize server components")
@@ -3833,9 +3835,10 @@ def run_bike_bus_bike_google_server():
         handler = partial(BikeBusBikeGoogleServer, directory=os.getcwd())
 
         try:
-            server = socketserver.TCPServer(("", PORT), handler)
+            server = socketserver.TCPServer(("0.0.0.0", PORT), handler)
             
-            print(f"\nBike-Bus-Bike Server running at http://localhost:{PORT}")
+            print(f"\nBike-Bus-Bike Server running at http://0.0.0.0:{PORT}")
+            print(f"Server accessible at: http://localhost:{PORT}")
             print(f"\nServer Features:")
             print(f"   Google Maps API for bicycle routing")
             print(f"   Google Maps API for transit routing")
